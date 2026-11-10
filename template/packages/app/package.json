@@ -1,0 +1,7 @@
+{
+  "name": "@demo/app",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": { "@demo/libstrings": "*" },
+  "scripts": { "typecheck": "tsc --noEmit -p tsconfig.json" }
+}
