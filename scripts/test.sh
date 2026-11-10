@@ -26,13 +26,7 @@ grep -q "TS2307" /tmp/ci3.log || fail "expected TS2307 in the pipeline job"
 echo "ok 4 - an independent pipeline job hits the same bug"
 
 cd ~/repo
-node -e "
-const fs = require('fs');
-const p = 'packages/app/package.json';
-const d = JSON.parse(fs.readFileSync(p));
-d.scripts.pretypecheck = 'npm run build -w @demo/libstrings';
-fs.writeFileSync(p, JSON.stringify(d, null, 2) + '\n');
-"
+npm pkg set scripts.pretypecheck="npm run build -w @demo/libstrings" -w @demo/app
 git add -A && git commit -qm "fix: build the dependency automatically before typecheck"
 rm -rf ~/repo-ci && git clone -q ~/repo ~/repo-ci
 (cd ~/repo-ci && bash ci/docker-build-typecheck.sh) >/tmp/ci4.log 2>&1 \
